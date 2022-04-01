@@ -18,6 +18,40 @@ ${media.lessThan('small')`
 justify-content: center;
 `}
 `
+const InputBox = styled.div`
+display: flex;
+flex-direction: row-reverse;
+width: 90%;
+
+${media.lessThan('small')`
+justify-content: center;
+width: 100%;
+`}
+`
+const Input = styled.input`
+background-color: black;
+font-size: 22px;
+border: none;
+width: 25%;
+height: 2.5em;
+margin-top: 4em;
+outline-color: white;
+opacity: 0.5;
+
+&:focus{
+    opacity: 0.8;
+}
+
+${media.lessThan('medium')`
+width: 35%;
+height: 2em;
+`}
+${media.lessThan('small')`
+width: 60%;
+height: 1.5em;
+margin-top: 2em;
+`}
+`
 const MoviesBox = styled.div`
 display: flex;
 width: 65%;
@@ -84,7 +118,8 @@ const apiSeries = axios.create({
 export default class Series extends React.Component {
 
     state = {
-        seriesList: []
+        seriesList: [],
+        searchResult: []
     }
 
     componentDidMount() {
@@ -105,16 +140,38 @@ export default class Series extends React.Component {
         seriesVar.splice(10, 1)
 
         this.setState({
-            seriesList: seriesVar
+            seriesList: seriesVar,
+            searchResult: seriesVar
+        })
+    }
+
+    searchBox = (event) => {
+        const { seriesList } = this.state;
+
+        if (event.target.value === '') {
+            this.setState({
+                searchResult: seriesList
+            })
+            return;
+        }
+        const search = seriesList.filter((item) => {
+            if (item.name.toLowerCase().includes(event.target.value.toLowerCase())) {
+                return true;
+            }
+        })
+        this.setState({
+            searchResult: search
         })
     }
 
     render() {
-        console.log(this.state.seriesList)
         return (
             <>
-                {this.state.seriesList.map((item) => (
-                    <Div>
+                <InputBox>
+                    <Input type="text" placeholder="Pesquise aqui" onChange={this.searchBox} />
+                </InputBox>
+                {this.state.searchResult.map((item) => (
+                    <Div key={item.id}>
                         <MoviesBox>
                             <Poster src={item.poster} alt='' />
                             <Details>

@@ -18,8 +18,39 @@ ${media.lessThan('small')`
 justify-content: center;
 `}
 `
+const InputBox = styled.div`
+display: flex;
+flex-direction: row-reverse;
+width: 90%;
+
+${media.lessThan('small')`
+justify-content: center;
+width: 100%;
+`}
+`
 const Input = styled.input`
-color: black;
+background-color: black;
+font-size: 22px;
+border: none;
+width: 25%;
+height: 2.5em;
+margin-top: 4em;
+outline-color: white;
+opacity: 0.5;
+
+&:focus{
+    opacity: 0.8;
+}
+
+${media.lessThan('medium')`
+width: 35%;
+height: 2em;
+`}
+${media.lessThan('small')`
+width: 60%;
+height: 1.5em;
+margin-top: 2em;
+`}
 `
 const MoviesBox = styled.div`
 display: flex;
@@ -105,27 +136,38 @@ export default class Filmes extends React.Component {
             }
         })
         this.setState({
-            filmsList: films
+            filmsList: films,
+            searchResult: films
         })
     }
 
     searchBox = (event) => {
-        const { filmsList, searchResul } = this.state;
+        const { filmsList } = this.state;
 
-        if (event.target.value === ''){
+        if (event.target.value === '') {
             this.setState({
                 searchResult: filmsList
             })
+            return;
         }
-        return;
+        const search = filmsList.filter((item) => {
+            if (item.title.toLowerCase().includes(event.target.value.toLowerCase())) {
+                return true;
+            }
+        })
+        this.setState({
+            searchResult: search
+        })
     }
 
     render() {
         return (
             <>
-                <Input type="text" onChange={this.searchBox}/>
-                {this.state.filmsList.map((item) => (
-                    <Div>
+                <InputBox>
+                    <Input type="text" placeholder="Pesquise aqui" onChange={this.searchBox} />
+                </InputBox>
+                {this.state.searchResult.map((item) => (
+                    <Div key={item.id}>
                         <MoviesBox>
                             <Poster src={item.poster} alt='' />
                             <Details>
