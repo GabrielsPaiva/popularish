@@ -18,9 +18,6 @@ ${media.lessThan('small')`
 justify-content: center;
 `}
 `
-const Input = styled.input`
-color: black;
-`
 const MoviesBox = styled.div`
 display: flex;
 width: 65%;
@@ -80,58 +77,50 @@ margin-left: 0.5em;
 `
 
 
-const apiFilms = axios.create({
-    baseURL: 'https://api.themoviedb.org/3/movie/popular?api_key=252d60063de5e2a6e49de1f14f0f68fe&language=pt-BR'
+const apiSeries = axios.create({
+    baseURL: 'https://api.themoviedb.org/3/tv/popular?api_key=252d60063de5e2a6e49de1f14f0f68fe&language=pt-BR'
 })
 
-export default class Filmes extends React.Component {
+export default class Series extends React.Component {
 
     state = {
-        filmsList: [],
-        searchResult: []
+        seriesList: []
     }
 
     componentDidMount() {
-        this.getFilms()
+        this.getSeries()
     }
 
-    getFilms = async () => {
-        const response = await apiFilms.get()
+    getSeries = async () => {
+        const response = await apiSeries.get()
 
-        const films = response.data.results.map((item) => {
+        const series = response.data.results.map((item) => {
             return {
                 ...item,
                 poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`
             }
         })
+        const seriesVar = series
+
+        seriesVar.splice(10, 1)
+
         this.setState({
-            filmsList: films
+            seriesList: seriesVar
         })
     }
 
-    searchBox = (event) => {
-        const { filmsList, searchResul } = this.state;
-
-        if (event.target.value === ''){
-            this.setState({
-                searchResult: filmsList
-            })
-        }
-        return;
-    }
-
     render() {
+        console.log(this.state.seriesList)
         return (
             <>
-                <Input type="text" onChange={this.searchBox}/>
-                {this.state.filmsList.map((item) => (
+                {this.state.seriesList.map((item) => (
                     <Div>
                         <MoviesBox>
                             <Poster src={item.poster} alt='' />
                             <Details>
-                                <Title>{item.title}</Title>
+                                <Title>{item.name}</Title>
                                 <Overview>{item.overview}</Overview>
-                                <Date>Lançado em : {item.release_date}</Date>
+                                <Date>Lançado em : {item.first_air_date}</Date>
                                 <RatingBox>
                                     <Star src={rateStar} alt="estrela dourada" />
                                     <Rate>{item.vote_average}</Rate>

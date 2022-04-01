@@ -49,7 +49,7 @@ export default class Series extends React.Component {
 
         const seriesVar = series
 
-        seriesVar.splice(11, 11)
+        seriesVar.splice(10, 1)
         
         this.setState({
             seriesList: seriesVar

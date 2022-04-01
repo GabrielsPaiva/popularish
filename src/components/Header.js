@@ -16,6 +16,7 @@ import {
 // components
 import Main from "./Main";
 import FilmsCatalogue from "./FilmsCatalogue";
+import SeriesCatalogue from "./SeriesCatalogue";
 
 
 const customMedia = generateMedia({
@@ -115,7 +116,7 @@ export default function Header() {
             <Div>
                 <Routes>
                     <Route path="/" element={<Main />} />
-                    <Route path="series" />
+                    <Route path="series" element={<SeriesCatalogue/>} />
                     <Route path="filmes" element={<FilmsCatalogue />} />
                 </Routes>
             </Div>
