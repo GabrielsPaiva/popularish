@@ -94,12 +94,14 @@ const Div = styled.div`
 .grUxXV{
     margin-top: 10em;
 }
+.rec-carousel-wrapper{
+}
 `
 
 
 export default function Header() {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Container>
                 <Link to='/'>
                     <Title src={siteName} alt="" />

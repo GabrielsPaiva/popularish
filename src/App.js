@@ -6,6 +6,7 @@ import Main from './components/Main'
 
 //styles 
 import styled, { createGlobalStyle } from 'styled-components'
+import Footer from './components/Footer'
 
 
 const GlobalStyle = createGlobalStyle`
@@ -26,6 +27,7 @@ export default function App(){
     <>
       <GlobalStyle/>
       <Header/>
+      <Footer/>
     </>
   )
 }
