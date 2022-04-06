@@ -88,13 +88,8 @@ font-size: 14px;
 // caixa dos carrosséis
 
 const Div = styled.div`
-.gglJDZ {
-    margin-top: 250px;
-}
 .grUxXV{
-    margin-top: 10em;
-}
-.rec-carousel-wrapper{
+    margin-top: 4em;
 }
 `
 

@@ -2,13 +2,16 @@ import React from "react";
 
 // style
 import styled from 'styled-components'
+import media, { generateMedia } from "styled-media-query";
 
 // series
 import Carousel from "react-elastic-carousel";
 import axios from "axios";
 
-const apiSeries = axios.create({
-    baseURL: 'https://api.themoviedb.org/3/tv/popular?api_key=252d60063de5e2a6e49de1f14f0f68fe&language=pt-BR'
+
+const customMedia = generateMedia({
+    customMedium: '767px',
+    mobileM: '375px'
 })
 
 
@@ -19,22 +22,42 @@ align-items: center;
 `
 const Poster = styled.img`
 width: 70%;
+
+${customMedia.lessThan("customMedium")`
+width: 40%;
+`}
+${media.lessThan('small')`
+width: 50%;
+`}
+${customMedia.lessThan('mobileM')`
+width: 60%;
+`}
 `
+
 const H2 = styled.h2`
 font-family: 'Montserrat', sans-serif;
 text-align: center;
 margin-top: 1em;
+
+${media.lessThan("medium")`
+font-size: 16px;
+`}
 `
 
+const apiSeries = axios.create({
+    baseURL: 'https://api.themoviedb.org/3/tv/popular?api_key=252d60063de5e2a6e49de1f14f0f68fe&language=pt-BR'
+})
 
 export default class Series extends React.Component {
 
     state = {
-        seriesList: []
+        seriesList: [],
+        carouselShownItems: 3 
     }
 
     componentDidMount() {
         this.getSeries()
+        this.itemsToShow()
     }
 
     getSeries = async () => {
@@ -57,10 +80,22 @@ export default class Series extends React.Component {
 
     }
 
+    itemsToShow = () =>{
+        if( window.innerWidth <= 767 ){
+            this.setState({
+                carouselShownItems: 1
+            })
+        }else{
+            this.setState({
+                carouselShownItems: 3
+            })
+        }
+    }
 
     render() {
+        const { carouselShownItems } = this.state
         return (
-            <Carousel itemsToShow={3} pagination={false}>
+            <Carousel itemsToShow={carouselShownItems} pagination={false}>
                 
                 {this.state.seriesList.map((item) => (
                     <Div>

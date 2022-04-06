@@ -119,7 +119,8 @@ export default class Filmes extends React.Component {
 
     state = {
         filmsList: [],
-        searchResult: []
+        searchResult: [],
+        errorMessage: ''
     }
 
     componentDidMount() {
@@ -150,10 +151,18 @@ export default class Filmes extends React.Component {
             })
             return;
         }
+
         const search = filmsList.filter((item) => {
             if (item.title.toLowerCase().includes(event.target.value.toLowerCase())) {
                 return true;
             }
+            const errorMessage = () => {
+                if (event.target.value !== item.title) {
+                  this.setState({
+                      errorMessage: 'Sentimos muito, mas não temos esse :/'
+                  })
+                }
+              };
         })
         this.setState({
             searchResult: search
@@ -182,6 +191,9 @@ export default class Filmes extends React.Component {
                         </MoviesBox>
                     </Div>
                 ))}
+                <div>
+                    <p>{this.state.errorMessage}</p>
+                </div>
             </>
         )
     }
