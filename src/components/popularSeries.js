@@ -98,7 +98,7 @@ export default class Series extends React.Component {
             <Carousel itemsToShow={carouselShownItems} pagination={false}>
                 
                 {this.state.seriesList.map((item) => (
-                    <Div>
+                    <Div key={item.id}>
                         <Poster src={item.poster} alt='' />
                         <H2>{item.name}</H2>
                     </Div>

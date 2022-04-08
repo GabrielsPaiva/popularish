@@ -92,7 +92,7 @@ export default class Filmes extends React.Component {
             <Carousel itemsToShow={carouselShownItems} pagination={false}>
 
                 {filmsList.map((item) => (
-                    <Div>
+                    <Div key={item.id}>
                         <Poster src={item.poster} alt='' />
                         <H2>{item.title}</H2>
                     </Div>

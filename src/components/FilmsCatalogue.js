@@ -89,7 +89,9 @@ margin-top: 1em;
 const Overview = styled.p`
 font-family: 'Montserrat', sans-serif;
 width: 95%;
+height: 40%;
 margin-top: 1em;
+overflow-y: auto;
 `
 const Date = styled.h3`
 font-family: 'Montserrat', sans-serif;
@@ -109,6 +111,16 @@ const Rate = styled.h2`
 font-size: 30px;
 margin-left: 0.5em;
 `
+const ErrorBox = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 40em;
+`
+const NotFound = styled.h2`
+margin-bottom: 10em;
+`
 
 
 const apiFilms = axios.create({
@@ -122,6 +134,7 @@ export default class Filmes extends React.Component {
         searchResult: [],
         errorMessage: ''
     }
+
 
     componentDidMount() {
         this.getFilms()
@@ -143,7 +156,7 @@ export default class Filmes extends React.Component {
     }
 
     searchBox = (event) => {
-        const { filmsList } = this.state;
+        const { filmsList } = this.state
 
         if (event.target.value === '') {
             this.setState({
@@ -156,17 +169,21 @@ export default class Filmes extends React.Component {
             if (item.title.toLowerCase().includes(event.target.value.toLowerCase())) {
                 return true;
             }
-            const errorMessage = () => {
-                if (event.target.value !== item.title) {
-                  this.setState({
-                      errorMessage: 'Sentimos muito, mas não temos esse :/'
-                  })
-                }
-              };
+            if (event.target.value !== item.title) {
+                this.setState({
+                    errorMessage: 'Sinto muito, não temos esse filme :/'
+                })
+            }else{
+                this.setState({
+                    errorMessage: null
+                })
+            }
         })
+
         this.setState({
-            searchResult: search
+            searchResult: search,
         })
+
     }
 
     render() {
@@ -191,9 +208,9 @@ export default class Filmes extends React.Component {
                         </MoviesBox>
                     </Div>
                 ))}
-                <div>
-                    <p>{this.state.errorMessage}</p>
-                </div>
+                <ErrorBox>
+                    <NotFound>{this.state.errorMessage}</NotFound>
+                </ErrorBox>
             </>
         )
     }
