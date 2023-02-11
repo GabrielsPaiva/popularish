@@ -1,12 +1,10 @@
 import React from 'react'
 
-//components
-import Header from './components/Header'
-import Main from './components/Main'
+// components
+import Home from './pages/Home/index'
 
 //styles 
-import styled, { createGlobalStyle } from 'styled-components'
-import Footer from './components/Footer'
+import { createGlobalStyle } from 'styled-components'
 
 
 const GlobalStyle = createGlobalStyle`
@@ -26,8 +24,7 @@ export default function App(){
   return(
     <>
       <GlobalStyle/>
-      <Header/>
-      <Footer/>
+      <Home/>
     </>
   )
 }
