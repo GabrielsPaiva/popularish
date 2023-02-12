@@ -18,7 +18,6 @@ const carousel_container = {
 }
 
 const PopularList = ({ listType, title, section }) => {
-    console.log(listType)
 
     const [filmsList, setFilmsList] = useState([])
     const [seriesList, setSeriesList] = useState([])
